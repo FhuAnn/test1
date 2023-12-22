@@ -179,28 +179,7 @@ namespace _DoAn.Views.Import
             btnDelete.Enabled = true;
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            ImportPresenter importPresenter = new ImportPresenter(this);
-            Command add = new AddCommand(importPresenter);
-            Command delete = new DeleteCommand(importPresenter);
-            Command cancel = new CancelCommand(importPresenter);
-            Command edit = new EditCommand(importPresenter, 0);
-            Invorker invorker = new Invorker(add, delete, cancel, edit);
-            if (invorker.DeleteData())
-            {
-                btnAdd.Enabled = false;
-                btnEdit.Enabled = false;
-                btnDelete.Enabled = false;
-                if (!importPresenter.CheckDB())
-                {
-                    btnCreate.Enabled = false;
-                    btnCancel.Enabled = false;
-                }
-            }
-        }
-
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void btnEdit_Click_1(object sender, EventArgs e)
         {
             ImportPresenter importPresenter = new ImportPresenter(this);
             Command edit = new EditCommand(importPresenter, dtgvData.CurrentRow.Index);
@@ -220,6 +199,26 @@ namespace _DoAn.Views.Import
             }
         }
 
+        private void btnDelete_Click_1(object sender, EventArgs e)
+        {
+            ImportPresenter importPresenter = new ImportPresenter(this);
+            Command add = new AddCommand(importPresenter);
+            Command delete = new DeleteCommand(importPresenter);
+            Command cancel = new CancelCommand(importPresenter);
+            Command edit = new EditCommand(importPresenter, 0);
+            Invorker invorker = new Invorker(add, delete, cancel, edit);
+            if (invorker.DeleteData())
+            {
+                btnAdd.Enabled = false;
+                btnEdit.Enabled = false;
+                btnDelete.Enabled = false;
+                if (!importPresenter.CheckDB())
+                {
+                    btnCreate.Enabled = false;
+                    btnCancel.Enabled = false;
+                }
+            }
+        }
         private void btnCancel_Click(object sender, EventArgs e)
         {
             ImportPresenter importPresenter = new ImportPresenter(this);
@@ -314,6 +313,11 @@ namespace _DoAn.Views.Import
 
         }
 
-        
+        private void txtTotal_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+       
     }
 }

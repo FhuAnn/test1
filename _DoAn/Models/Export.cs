@@ -19,21 +19,18 @@ namespace _DoAn.Models
         public float ExportPrice;
         public int Quantity;
         public float Total;
-
-
         public DataTable GetProductData()
         {
             ConnectDB connect = new ConnectDB();
-            string sqlQuery = "select Product_id as ID, ProductName as Name, Price, Description, Origin, Unit, TypeName as Type from Product , ProductType where Product.ProductType = ProductType.ProductType_id";
+            string sqlQuery = "select Product_id as ID, ProductName as Name, Price, Description, Origin, Unit.Unit_Namelv1 as Unit, TypeName as Type from Product , ProductType ,Unit where Product.ProductType = ProductType.ProductType_id and Unit.Unit_id=Product.Unit_id;";
             return connect.GetData(sqlQuery);
         }
         public DataTable SearchData(string search)
         {
             ConnectDB connect = new ConnectDB();
-            string sqlQuery = "select Product_id as ID, ProductName as Name, Price, Description, Origin, Unit, TypeName as Type from Product , ProductType where Product.ProductType = ProductType.ProductType_id and (Product_id like '" + search + "%' or ProductName like N'" + search + "%')";
+            string sqlQuery = "select Product_id as ID, ProductName as Name, Price, Description, Origin, Unit.Unit_Namelv1, TypeName as Type from Product , ProductType, Unit where Product.ProductType = ProductType.ProductType_id and Unit.Unit_id = Product.Unit_id and(Product_id like '" + search + "%' or ProductName like N'% " + search + "%' )";
             return connect.GetData(sqlQuery);
         }
-
         public string AddData(string employee, string re, string totalprice)
         {
             DateTime dateTime = DateTime.UtcNow.Date;
@@ -52,12 +49,10 @@ namespace _DoAn.Models
             ConnectDB connect = new ConnectDB();
             return connect.GetId(cmd).ToString();
             ////////////////
-
         }
-        
         public bool UpdateProduct(string quantity, string id)
         {
-            SqlCommand cmd = new SqlCommand("Update Product set Quantities = Quantities - @quan where Product_id = @id");
+            SqlCommand cmd = new SqlCommand("Update Product  set lv1Quantity = lv1Quantity - @quan");
             cmd.Parameters.Add("@quan", SqlDbType.Int);
             cmd.Parameters["@quan"].Value = Convert.ToInt32(quantity);
             cmd.Parameters.Add("@id", SqlDbType.Int);

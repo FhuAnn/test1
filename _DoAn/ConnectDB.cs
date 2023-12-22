@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace _DoAn
 {
@@ -18,7 +19,7 @@ namespace _DoAn
         public DataTable GetData(string sqlquery)
         {
             SqlDataAdapter sqldata = new SqlDataAdapter(sqlquery, this.connect);
-            DataTable dataTable = new DataTable();
+            DataTable dataTable = new DataTable();  
             sqldata.Fill(dataTable);
             return dataTable;
         }
@@ -26,12 +27,12 @@ namespace _DoAn
         {
             cmd.Connection = this.connect;
             connect.Open();
-            if (cmd.ExecuteNonQuery() > 0)
-            {
+                if (cmd.ExecuteNonQuery() > 0)
+                {
+                    connect.Close();
+                    return true;
+                }
                 connect.Close();
-                return true;
-            }
-            connect.Close();
             return false;
         }
         public int GetId(SqlCommand cmd)
